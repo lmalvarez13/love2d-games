@@ -1,0 +1,310 @@
+/* =========================
+   MEDIEVAL — WOODEN (default)
+   Brownish wood panels + cool teal/green “forest spore” particles
+========================= */
+.theme-medieval {
+  /* Page background (brownish wood mood) */
+  --bg: linear-gradient(180deg, #1b130d, #21170f 50%, #14110e 100%);
+  --text: #ecf8ff;
+  --accent: #a3e635;
+  --accent-2: #f59e0b;
+  --accent-3: #60a5fa;
+  --glow: rgba(163, 230, 53, 0.35);
+
+  /* Wood texture (subtle, layered) */
+  --texture: radial-gradient(
+      circle at 18% 32%,
+      rgba(255, 255, 255, 0.04),
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 78% 76%,
+      rgba(255, 255, 255, 0.035),
+      transparent 40%
+    ),
+    repeating-linear-gradient(8deg, #2a1c12 0 24px, #1f160f 24px 26px),
+    repeating-linear-gradient(98deg, #23180f 0 90px, #1a130d 90px 92px);
+
+  /* Warm base glow with a hint of cool at the edges */
+  --ambient-gradients: radial-gradient(
+      60% 60% at 50% 20%,
+      rgba(230, 160, 80, 0.22),
+      transparent 70%
+    ),
+    radial-gradient(
+      70% 70% at 50% 100%,
+      rgba(40, 120, 100, 0.18),
+      transparent 70%
+    );
+
+  /* Particle palette (cool foresty) */
+  --p-color-1: #8ef0d0;
+  --p-color-2: #6ee7b7;
+  --p-color-3: #3dd6c6;
+
+  /* Particle behavior (theme-level knobs) */
+  --particles-enabled: 1; /* 0 = off, 1 = on */
+  --sparks-count: 70; /* # of bright specks */
+  --smoke-count: 24; /* # of soft puffs */
+  --particle-mode: rise; /* rise | down | drift | orbit */
+  --particle-size-min: 2; /* px (sparks baseline) */
+  --particle-size-max: 4; /* px */
+  --particle-duration-min: 3.5; /* seconds (faster) */
+  --particle-duration-max: 7.5; /* seconds (slower) */
+}
+
+/* =========================
+   RETRO — NEON SHINY DARK VIOLET
+   Vibrant neon-violet with electric accents
+========================= */
+.theme-retro {
+  --bg: radial-gradient(
+    120% 120% at 50% 0%,
+    #1e0b2b,
+    #11071e 65%,
+    #0a0714 100%
+  );
+  --text: #eee6ff;
+  --accent: #bf7fff;
+  --accent-2: #8ee1ff;
+  --accent-3: #ff79c6;
+  --glow: rgba(191, 127, 255, 0.36);
+
+  --texture: radial-gradient(
+      circle at 25% 35%,
+      rgba(255, 255, 255, 0.06),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      rgba(255, 255, 255, 0.05),
+      transparent 45%
+    ),
+    repeating-linear-gradient(
+      45deg,
+      rgba(191, 127, 255, 0.08) 0 2px,
+      transparent 2px 14px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(142, 225, 255, 0.08) 0 2px,
+      transparent 2px 14px
+    );
+
+  --ambient-gradients: radial-gradient(
+      60% 60% at 50% 20%,
+      rgba(191, 127, 255, 0.28),
+      transparent 70%
+    ),
+    radial-gradient(
+      70% 70% at 50% 100%,
+      rgba(255, 121, 198, 0.22),
+      transparent 70%
+    );
+
+  /* Neon “pixel” particles with slight drift by default */
+  --p-color-1: #bf7fff;
+  --p-color-2: #8ee1ff;
+  --p-color-3: #ff79c6;
+  --particles-enabled: 1;
+  --sparks-count: 80;
+  --smoke-count: 16;
+  --particle-mode: drift; /* default drift for retro */
+  --particle-size-min: 2;
+  --particle-size-max: 5;
+  --particle-duration-min: 5.5; /* a little slower to feel floaty */
+  --particle-duration-max: 10.5;
+}
+
+/* =========================
+   COZY — RELAX (replaces “cabin” with a calmer, not-brown mood)
+   Soft dusk palette; muted teals & warm lamp ambiance
+========================= */
+.theme-cozy {
+  --bg: linear-gradient(180deg, #0f1417, #142026 60%, #0e1518 100%);
+  --text: #f7fafc;
+  --accent: #ffd27d;
+  --accent-2: #bfe3ff;
+  --accent-3: #b2f5ea;
+  --glow: rgba(255, 210, 125, 0.35);
+
+  /* Soft “bokeh-ish” dots instead of wood lines */
+  --texture: radial-gradient(
+      circle at 30% 30%,
+      rgba(255, 255, 255, 0.05),
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 70% 75%,
+      rgba(255, 255, 255, 0.04),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 50% 55%,
+      rgba(255, 255, 255, 0.03),
+      transparent 45%
+    );
+
+  --ambient-gradients: radial-gradient(
+      60% 60% at 50% 20%,
+      rgba(255, 210, 125, 0.22),
+      transparent 70%
+    ),
+    radial-gradient(
+      70% 70% at 50% 100%,
+      rgba(178, 245, 234, 0.18),
+      transparent 70%
+    );
+
+  /* Calm floating motes (warm & pale) */
+  --p-color-1: #ffe8ba;
+  --p-color-2: #fff3d0;
+  --p-color-3: #e2fffb;
+
+  --particles-enabled: 1;
+  --sparks-count: 36; /* fewer, calmer */
+  --smoke-count: 12;
+  --particle-mode: drift; /* gentle horizontal drift */
+  --particle-size-min: 3;
+  --particle-size-max: 7;
+  --particle-duration-min: 7; /* slower */
+  --particle-duration-max: 13;
+}
+
+/* =========================
+   SCI-FI — (unchanged core, shown for reference)
+========================= */
+.theme-scifi {
+  --bg: linear-gradient(180deg, #030712, #0a1430);
+  --text: #e6f7ff;
+  --accent: #7dd3fc;
+  --accent-2: #60a5fa;
+  --accent-3: #67e8f9;
+  --glow: rgba(103, 232, 249, 0.4);
+  --texture: radial-gradient(
+      circle at 20% 30%,
+      rgba(255, 255, 255, 0.045),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      rgba(255, 255, 255, 0.045),
+      transparent 45%
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.04) 0 1px,
+      transparent 1px 10px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.04) 0 1px,
+      transparent 1px 10px
+    );
+  --ambient-gradients: radial-gradient(
+      60% 60% at 50% 20%,
+      rgba(96, 165, 250, 0.28),
+      transparent 70%
+    ),
+    radial-gradient(
+      70% 70% at 50% 100%,
+      rgba(125, 211, 252, 0.26),
+      transparent 70%
+    );
+
+  --p-color-1: #7dd3fc;
+  --p-color-2: #60a5fa;
+  --p-color-3: #67e8f9;
+  --particles-enabled: 1;
+  --sparks-count: 60;
+  --smoke-count: 20;
+  --particle-mode: rise;
+  --particle-size-min: 2;
+  --particle-size-max: 4.5;
+  --particle-duration-min: 4;
+  --particle-duration-max: 8.5;
+}
+
+/* ===== Optional extra variants (add if you want more variety) ===== */
+
+/* Aurora (greens/purples, slow rise) */
+.theme-aurora {
+  --bg: linear-gradient(180deg, #08121a, #0a1822 60%, #060c12 100%);
+  --text: #eaf7ff;
+  --accent: #93f5a9;
+  --accent-2: #b48bff;
+  --accent-3: #79ffe1;
+  --glow: rgba(147, 245, 169, 0.32);
+  --texture: radial-gradient(
+      circle at 25% 25%,
+      rgba(255, 255, 255, 0.05),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 75% 70%,
+      rgba(255, 255, 255, 0.04),
+      transparent 45%
+    );
+  --ambient-gradients: radial-gradient(
+      70% 70% at 50% 100%,
+      rgba(147, 245, 169, 0.22),
+      transparent 70%
+    ),
+    radial-gradient(
+      60% 60% at 50% 20%,
+      rgba(180, 139, 255, 0.2),
+      transparent 70%
+    );
+  --p-color-1: #93f5a9;
+  --p-color-2: #b48bff;
+  --p-color-3: #79ffe1;
+  --particles-enabled: 1;
+  --sparks-count: 50;
+  --smoke-count: 20;
+  --particle-mode: drift;
+  --particle-size-min: 3;
+  --particle-size-max: 6;
+  --particle-duration-min: 6.5;
+  --particle-duration-max: 12;
+}
+
+/* Embers (charcoal red, ember sparks falling down) */
+.theme-embers {
+  --bg: linear-gradient(180deg, #0f0a0a, #140e10 60%, #0a0708 100%);
+  --text: #ffecec;
+  --accent: #fb7185;
+  --accent-2: #f97316;
+  --accent-3: #fdba74;
+  --glow: rgba(249, 115, 22, 0.32);
+  --texture: radial-gradient(
+      circle at 20% 30%,
+      rgba(255, 255, 255, 0.04),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      rgba(255, 255, 255, 0.03),
+      transparent 45%
+    );
+  --ambient-gradients: radial-gradient(
+      60% 60% at 50% 20%,
+      rgba(249, 115, 22, 0.22),
+      transparent 70%
+    ),
+    radial-gradient(
+      70% 70% at 50% 100%,
+      rgba(251, 113, 133, 0.18),
+      transparent 70%
+    );
+  --p-color-1: #ffd29b;
+  --p-color-2: #ff9966;
+  --p-color-3: #ffc7a6;
+  --particles-enabled: 1;
+  --sparks-count: 55;
+  --smoke-count: 10;
+  --particle-mode: down; /* note: falling embers */
+  --particle-size-min: 2.5;
+  --particle-size-max: 5.5;
+  --particle-duration-min: 5.5;
+  --particle-duration-max: 9.5;
+}

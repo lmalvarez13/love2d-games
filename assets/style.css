@@ -1,0 +1,281 @@
+/* ---------- Base layout ---------- */
+:root{
+  --bg-1: #0b0f1a;
+  --bg-2: #101827;
+  --text:#eaf7ff;
+  --glass: rgba(255,255,255,0.06);
+  --glass-2: rgba(255,255,255,0.14);
+  --glow: rgba(94,234,212,0.35);
+  --particles: on;             /* on | off */
+  --p-motion: rise;            /* rise | float | snow | orbit */
+  --p-size-min: 2;             /* px */
+  --p-size-max: 4;             /* px */
+  --p-dur-min: 3.5;            /* seconds */
+  --p-dur-max: 7.5;            /* seconds */
+  --p-smoke-dur-min: 6;        /* seconds */
+  --p-smoke-dur-max: 11;       /* seconds */
+  --p-vertical-span: 70;       /* vh */
+}
+
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
+  color:var(--text);
+  background: var(--bg, radial-gradient(120% 140% at 50% 0%, var(--bg-1) 0%, var(--bg-2) 60%));
+  overflow-x:hidden;
+}
+
+/* Theme pattern/backdrop (from themes.css) */
+body::before{
+  content:"";
+  position:fixed; inset:0; z-index:-2;
+  background: var(--texture, none);
+  opacity: var(--texture-opacity, .5);
+  filter: var(--texture-filter, contrast(1.02) brightness(.97));
+  mix-blend-mode: normal;
+}
+
+/* Ambient glow strip near bottom (from themes.css) */
+.ambient-glow{
+  position:fixed; left:0; right:0; bottom:-10vh; height:38vh; z-index:-1;
+  background: var(--ambient-gradients, none);
+  filter: blur(20px) saturate(1.05);
+  pointer-events:none;
+}
+
+/* Header + buttons */
+.header{
+  position:fixed; inset:16px 16px auto 16px; display:flex; justify-content:space-between; align-items:center; z-index:10;
+}
+.btn{
+  display:inline-flex; align-items:center; gap:10px; padding:10px 14px;
+  border:1px solid var(--glass-2); border-radius:999px; color:var(--text);
+  background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+  box-shadow: 0 0 0 1px rgba(0,0,0,.4) inset, 0 10px 22px rgba(0,0,0,.35), 0 0 30px var(--glow);
+  backdrop-filter: blur(6px);
+  text-decoration:none; cursor:pointer; transition: transform .15s ease, border-color .2s ease;
+}
+.btn:hover{ transform:translateY(-1px); border-color:var(--accent, #5eead4); }
+.btn svg{ width:18px; height:18px; }
+
+.repoBtn{ position:fixed; right:16px; bottom:16px; z-index:10; }
+
+/* Layout / frame */
+.wrap{ min-height:100vh; padding:110px 20px 88px; display:grid; place-items:center; }
+.frame{
+  position:relative; width:min(96vw, 1280px); border-radius:24px;
+  background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+  border:1px solid var(--glass-2);
+  box-shadow: 0 10px 45px rgba(0,0,0,.55), 0 0 80px rgba(96,165,250,.10);
+  overflow:hidden;
+}
+
+/* Aspect handling: default is FIXED 16:9 now */
+.play{
+  position:relative; width:100%; max-height:calc(100vh - 220px);
+  background: radial-gradient(70% 80% at 50% 45%, rgba(9,13,24,.9), rgba(5,8,14,.96));
+  border-top-left-radius:22px; border-top-right-radius:22px;
+  border-bottom:1px solid var(--glass);
+  overflow:hidden;
+}
+.play.fixed169{ aspect-ratio:16/9; }
+.play.fixed169::before{ content:""; display:block; padding-top:56.25% } /* fallback */
+.play.auto{ aspect-ratio:auto; } /* uses actual canvas aspect */
+
+/* Stage keeps the game centered regardless of the controls panel */
+.stage{ position:absolute; inset:0; display:grid; place-items:center; }
+#gameContainer{ width:100%; height:100%; outline:none; }
+
+/* Fullscreen button */
+.fsBtn{
+  position:absolute; right:10px; bottom:10px; z-index:5;
+  width:38px; height:38px; border-radius:50%;
+  display:grid; place-items:center;
+  border:1px solid var(--glass-2);
+  background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.03));
+  cursor:pointer;
+}
+.fsBtn:hover{ border-color:var(--accent-3, #60a5fa) }
+
+.title{
+  margin:12px auto 16px; text-align:center; font-weight:700; letter-spacing:.3px;
+  color:var(--text); text-shadow:0 0 14px rgba(96,165,250,.25);
+}
+
+/* Particles, theme-colored */
+.layer{ position:fixed; inset:0; pointer-events:none; z-index:-1; overflow:hidden; }
+.p{ position:absolute; bottom:-20px; border-radius:50%; will-change: transform, opacity; animation-timing-function: linear; animation-iteration-count: infinite; }
+
+@keyframes riseGeneric {
+  0%   { transform: translateY(0) translateX(0) scale(1); opacity:0 }
+  15%  { opacity:1 }
+  70%  { opacity:.85 }
+  100% { transform: translateY(-70vh) translateX(var(--sx, 0)) scale(.9); opacity:0 }
+}
+
+/* FALL straight down (embers feel) */
+@keyframes fallDown {
+  0%   { transform: translateY(-10vh) translateX(0) scale(1); opacity:0 }
+  10%  { opacity:.9 }
+  80%  { opacity:.85 }
+  100% { transform: translateY(80vh) translateX(var(--sx, 0)) scale(.95); opacity:0 }
+}
+
+/* DRIFT sideways with gentle vertical movement (calm/relax) */
+@keyframes driftSide {
+  0%   { transform: translateY(0) translateX(0) scale(1); opacity:0 }
+  15%  { opacity:.85 }
+  50%  { transform: translateY(-30vh) translateX(calc(var(--sx, 0))); opacity:.85 }
+  100% { transform: translateY(-55vh) translateX(calc(var(--sx, 0))); opacity:0 }
+}
+
+/* ORBIT in a small circular path (techy/sci-fi HUD feel) */
+@keyframes orbit {
+  0%   { transform: translate(0, 0) scale(1); opacity:0 }
+  15%  { opacity:.8 }
+  50%  { transform: translate(calc(var(--sx, 0)), calc(var(--sy, 0))) scale(1); opacity:.85 }
+  100% { transform: translate(calc(var(--sx, 0) * -1), calc(var(--sy, 0) * -1)) scale(1); opacity:0 }
+}
+
+/* Fixed controls panel (outside the frame), mid-upper-right */
+.controls-fixed{
+  position:fixed; right:16px; top:18vh; z-index:9;
+  width:220px; max-width:36vw;
+  padding:10px 12px;
+  border:1px solid var(--glass-2);
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+  border-radius:14px;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.35) inset, 0 8px 20px rgba(0,0,0,.35);
+  font-size: 13px;
+}
+.controls-fixed h3{ margin:0 0 6px 0; font-size:12px; opacity:.95; letter-spacing:.35px; }
+.controls-fixed .row{ display:flex; align-items:center; gap:8px; opacity:.92; margin:4px 0; }
+.k{ font-weight:700; padding:1px 7px; border-radius:8px; border:1px solid var(--glass-2);
+    background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); }
+
+@media (max-width:900px){
+  .controls-fixed{ top:10px; right:10px; width:190px; }
+}
+@media (max-width:640px){
+  .btn{ padding:9px 12px }
+  .fsBtn{ width:34px; height:34px }
+  .title{ font-size:14px }
+  .controls-fixed{ width:170px; font-size:12px; }
+}
+
+/* ===== Right-side vertical game carousel ===== */
+.game-carousel {
+  position: fixed;
+  top: 90px;          /* below the header (which is at 16px) */
+  right: 16px;
+  width: 180px;
+  z-index: 11;
+  background: rgba(11, 6, 20, 0.45);
+  border: 1px solid rgba(191, 127, 255, 0.85); /* neon-violet frame */
+  box-shadow: 0 0 24px rgba(191, 127, 255, 0.45);
+  border-radius: 16px;
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: auto;
+}
+
+.game-carousel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 10px 0 10px;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  text-shadow: 0 0 6px rgba(191, 127, 255, 0.6);
+}
+
+.game-carousel-nav {
+  display: flex;
+  gap: 4px;
+}
+
+.game-carousel-nav button {
+  background: rgba(191, 127, 255, 0.08);
+  border: 1px solid rgba(191, 127, 255, 0.35);
+  color: var(--text);
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.game-carousel-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 6px 8px 10px 8px;
+  overflow: hidden; /* show only 3, rest are swapped by React */
+}
+
+.game-carousel-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.12);
+  border: 1px solid transparent;
+  border-radius: 12px;
+  padding: 6px 6px;
+  cursor: pointer;
+  transition: border 0.15s ease, background 0.15s ease, transform 0.15s ease;
+  width: 100%;
+}
+
+.game-carousel-item:hover,
+.game-carousel-item:focus-visible {
+  border-color: rgba(191, 127, 255, 0.75);
+  background: rgba(191, 127, 255, 0.08);
+  transform: translateY(-1px);
+}
+
+.game-carousel-thumb {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  object-fit: cover;
+  border: 1px solid rgba(191, 127, 255, 0.3);
+  flex: 0 0 auto;
+}
+
+.game-carousel-title {
+  font-size: 12px;
+  line-height: 1.2;
+  text-align: left;
+  color: var(--text);
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+}
+
+/* if screen is very narrow, tuck it down a bit */
+@media (max-width: 720px) {
+  .game-carousel {
+    top: 120px;
+    right: 10px;
+    width: 160px;
+  }
+}
+
+/* ===== Retro font for carousel ===== */
+.game-carousel,
+.game-carousel-header,
+.game-carousel-title {
+  font-family: "Press Start 2P", monospace;
+  letter-spacing: 0.04em;
+}
+
+.game-carousel-header {
+  font-size: 10px;
+}
+
+.game-carousel-title {
+  font-size: 8px;
+}

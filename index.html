@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Medieval RPG | Unity Engine</title>
+
+    <!-- Unity classic template assets (keep these relative paths if present) -->
+    <link rel="shortcut icon" href="TemplateData/favicon.ico" />
+
+    <!-- React & Babel (no bundler needed) -->
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/@babel/standalone/babel.min.js"
+    ></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="assets/style.css" />
+    <link rel="stylesheet" href="assets/themes.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  </head>
+  <body class="theme-retro">
+    <!-- Default theme set here. Options: theme-medieval | theme-cabin | theme-neon | theme-scifi | theme-desert | theme-ocean | theme-vapor | theme-retro -->
+    <div id="root"></div>
+
+    <!-- App -->
+    <script type="text/babel" data-type="module" src="assets/app.jsx"></script>
+
+    <!-- Optional newer Unity loader -->
+    <!-- <script src="Build/build.loader.js"></script> -->
+  </body>
+</html>
