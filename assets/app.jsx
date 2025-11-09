@@ -6,7 +6,7 @@ const { useEffect, useMemo, useState } = React;
  * ASPECT_MODE: '16:9' (default) | 'auto'
  */
 
-const LOVE_RUNNER_BASE = '/play/index.html';
+const LOVE_RUNNER_BASE = 'https://lmalvarez13.github.io/love2d-games/';
 const THEME = new URLSearchParams(location.search).get("theme") || "retro";
 const SHOW_CONTROLS =
   (new URLSearchParams(location.search).get("controls") ?? "false") === "true";
