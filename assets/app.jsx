@@ -432,7 +432,7 @@ function App() {
             </div>
           </div>
           <div className="title" id="game-title">
-            Medieval RPG | Unity Engine
+            CS50 Course Games | Love2D
           </div>
         </section>
       </div>
