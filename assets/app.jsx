@@ -140,7 +140,7 @@ function useUnity() {
     // now load the LÖVE game once the component is mounted
     loadLoveGame({
       v: "11.4",
-      g: "/0-Pong/_build/0-Pong.love",
+      g: "../0-Pong/_build/0-Pong.love",
       c: true,
       n: 1,
     });
